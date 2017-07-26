@@ -21,6 +21,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpCoreContext;
 
+import at.hsol.xenapi.err.ValueNotFoundException;
+
 public class XenforoConnector {
 	public final String USER_AGENT = "Mozilla/5.0";
 
@@ -38,8 +40,14 @@ public class XenforoConnector {
 
 		HttpPost post = new HttpPost(url + UrlConstants.LOGIN);
 		post.setHeader("User-Agent", USER_AGENT);
-		Set<BasicNameValuePair> urlParameters = new PostSetBuilder("").addLogin(username).addRegister(null)
-				.addPassword("admin").addCookieCheck(null).addRedirect(null).addToken().build();
+		Set<BasicNameValuePair> urlParameters = null;
+		try {
+			urlParameters = new PostSetBuilder("").addLogin(username).addRegister(null).addPassword("admin")
+					.addCookieCheck(null).addRedirect(null).addToken().build();
+		} catch (ValueNotFoundException e1) {
+			// TODO handle error
+			e1.printStackTrace();
+		}
 
 		try {
 			String s;
@@ -107,7 +115,6 @@ public class XenforoConnector {
 				response.close();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -129,16 +136,17 @@ public class XenforoConnector {
 				String html = createHtmlString(response);
 				nameValSet = new PostSetBuilder(html).addToken().addRelativeResolver().addWatchThreadState()
 						.addAttachmentHash().addRequestUri().addNoRedirect(null).addResponseType(null).build();
+			} catch (ValueNotFoundException e) {
+				e.printStackTrace();
+				// TODO handle error
 			} finally {
 				response.close();
 			}
 
 			return nameValSet;
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -153,15 +161,16 @@ public class XenforoConnector {
 				String html = createHtmlString(response);
 				nameValSet = new PostSetBuilder(html).addToken().addRelativeResolver().addLastDate().addLastKnownDate()
 						.addAttachmentHash().addMessageHtml(null).build();
+			} catch (ValueNotFoundException e) {
+				e.printStackTrace();
+				// TODO handle error
 			} finally {
 				response.close();
 			}
 			return nameValSet;
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
