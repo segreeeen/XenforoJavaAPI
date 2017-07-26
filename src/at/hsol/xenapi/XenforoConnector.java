@@ -4,15 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -24,10 +20,6 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpCoreContext;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 public class XenforoConnector {
 	public final String USER_AGENT = "Mozilla/5.0";
@@ -44,15 +36,10 @@ public class XenforoConnector {
 
 	public String login(String url, String username, String password) {
 
-		HttpPost post = new HttpPost(url + UrlConstants.URL);
+		HttpPost post = new HttpPost(url + UrlConstants.LOGIN);
 		post.setHeader("User-Agent", USER_AGENT);
-		List<NameValuePair> urlParameters = new ArrayList<>();
-		urlParameters.add(new BasicNameValuePair(PostConstants.LOGIN, username));
-		urlParameters.add(new BasicNameValuePair(PostConstants.REGISTER, "0"));
-		urlParameters.add(new BasicNameValuePair(PostConstants.PASSWORD, password));
-		urlParameters.add(new BasicNameValuePair(PostConstants.COOKIE_CHECK, "0"));
-		urlParameters.add(new BasicNameValuePair(PostConstants.REDIRECT, "/"));
-		urlParameters.add(new BasicNameValuePair(PostConstants.TOKEN, ""));
+		Set<BasicNameValuePair> urlParameters = new PostSetBuilder("").addLogin(username).addRegister(null)
+				.addPassword("admin").addCookieCheck(null).addRedirect(null).addToken().build();
 
 		try {
 			String s;
@@ -98,8 +85,8 @@ public class XenforoConnector {
 				: (currentHost.toURI() + currentReq.getURI());
 	}
 
-	private void addReply(String url, String message) {
-		HashSet<BasicNameValuePair> vals = getAddreplyHiddenValues(url);
+	public void addReply(String url, String message) {
+		Set<BasicNameValuePair> vals = getAddreplyHiddenValues(url);
 		try {
 			HttpPost post = new HttpPost(url + UrlConstants.ADD_REPLY);
 			post.setHeader("User-Agent", USER_AGENT);
@@ -125,8 +112,8 @@ public class XenforoConnector {
 		}
 	}
 
-	private HashSet<BasicNameValuePair> getAddreplyHiddenValues(String url) {
-		HashSet<BasicNameValuePair> nameValSet = new HashSet<>();
+	private Set<BasicNameValuePair> getAddreplyHiddenValues(String url) {
+		Set<BasicNameValuePair> nameValSet = null;
 		try {
 			HttpPost post = new HttpPost(url + UrlConstants.ADD_REPLY);
 			post.setHeader("User-Agent", USER_AGENT);
@@ -140,27 +127,8 @@ public class XenforoConnector {
 				System.out.println(currentUrl);
 
 				String html = createHtmlString(response);
-				Document doc = Jsoup.parse(html);
-				Elements vals = doc.select("input, textarea");
-
-				for (Element e : vals) {
-					if (e.attr("name").equals(PostConstants.TOKEN)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					} else if (e.attr("name").equals(PostConstants.RELATIVE_RESOLVER)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					} else if (e.attr("name").equals(PostConstants.WATCH_THREAD_STATE)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					} else if (e.attr("name").equals(PostConstants.LAST_KNOWN_DATE)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					} else if (e.attr("name").equals(PostConstants.ATTACHMENT_HASH)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					}
-				}
-				nameValSet.add(
-						new BasicNameValuePair(PostConstants.REQUEST_URI, doc.select("#ThreadReply").attr("action")));
-				nameValSet.add(new BasicNameValuePair(PostConstants.NO_REDIRECT, PostConstants.NO_REDIRECT_DEFAULT));
-				nameValSet
-						.add(new BasicNameValuePair(PostConstants.RESPONSE_TYPE, PostConstants.RESPONSE_TYPE_DEFAULT));
+				nameValSet = new PostSetBuilder(html).addToken().addRelativeResolver().addWatchThreadState()
+						.addAttachmentHash().addRequestUri().addNoRedirect(null).addResponseType(null).build();
 			} finally {
 				response.close();
 			}
@@ -177,30 +145,14 @@ public class XenforoConnector {
 	}
 
 	private Set<BasicNameValuePair> getAddreplyAccessHiddenValues(String url) {
-		HashSet<BasicNameValuePair> nameValSet = new HashSet<>();
+		Set<BasicNameValuePair> nameValSet = null;
 		try {
 			HttpGet get = new HttpGet(url);
 			CloseableHttpResponse response = (CloseableHttpResponse) client.execute(get, context);
 			try {
 				String html = createHtmlString(response);
-				Document doc = Jsoup.parse(html);
-				Elements links = doc.select("input").attr("type", "hidden");
-				for (Element e : links) {
-					if (e.attr("name").equals(PostConstants.TOKEN)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					} else if (e.attr("name").equals(PostConstants.RELATIVE_RESOLVER)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					} else if (e.attr("name").equals(PostConstants.LAST_DATE)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					} else if (e.attr("name").equals(PostConstants.LAST_KNOWN_DATE)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					} else if (e.attr("name").equals(PostConstants.ATTACHMENT_HASH)) {
-						nameValSet.add(new BasicNameValuePair(e.attr("name"), e.attr("value")));
-					}
-				}
-				nameValSet.add(
-						new BasicNameValuePair(PostConstants.MESSAGE_HTML_NAME, PostConstants.MESSAGE_HTML_DEFAULT));
-				nameValSet.add(new BasicNameValuePair(PostConstants.MORE_OPIONS_NAME, PostConstants.MORE_OPIONS_VALUE));
+				nameValSet = new PostSetBuilder(html).addToken().addRelativeResolver().addLastDate().addLastKnownDate()
+						.addAttachmentHash().addMessageHtml(null).build();
 			} finally {
 				response.close();
 			}
