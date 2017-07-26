@@ -131,7 +131,12 @@ public class PostSetBuilder {
 	}
 
 	PostSetBuilder addToken() throws ValueNotFoundException {
-		postSet.add(createBasicNameValuePair(PostConstants.TOKEN, "[name=" + PostConstants.TOKEN + "]", ATTR_VALUE));
+		try {
+			postSet.add(
+					createBasicNameValuePair(PostConstants.TOKEN, "[name=" + PostConstants.TOKEN + "]", ATTR_VALUE));
+		} catch (ValueNotFoundException e) {
+			postSet.add(new BasicNameValuePair(PostConstants.TOKEN, ""));
+		}
 		return this;
 	}
 
