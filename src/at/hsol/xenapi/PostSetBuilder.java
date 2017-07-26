@@ -7,14 +7,22 @@ import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import at.hsol.xenapi.err.ValueNotFoundException;
+
 /**
  * This class builds a set of post values which it reads from the html string
  * provided in the constructor. To build the set, call the add functions.
  * 
- * @author Felix Batusic
+ * @author Felix Batusic, thomassulzbacher
  *
  */
 public class PostSetBuilder {
+
+	// constants
+	public static final String ATTR_VALUE = "value";
+	public static final String ATTR_ACTION = "action";
+	public static final String SELECT_THREAD = "#ThreadReply";
+
 	private final Set<BasicNameValuePair> postSet;
 	private final Document htmlDoc;
 
@@ -30,12 +38,19 @@ public class PostSetBuilder {
 				+ "	data-previewUrl=\"threads/forenspiel-licht-an-licht-aus.19072/reply/preview\"\r\n"
 				+ "	data-redirect=\"on\">";
 		PostSetBuilder psBuilder = new PostSetBuilder(s);
-		Set<BasicNameValuePair> val = psBuilder.addRelativeResolver().addAttachmentHash().addToken()
-				.addWatchThreadState().addLogin("blabla").addPassword("blub").addRegister(null).addCookieCheck(null)
-				.addLastDate().addLastKnownDate().addMessageHtml("Test123").addResponseType(null).addRedirect(null)
-				.addMoreOptions(null).addNoRedirect(null).addRequestUri().build();
-		for (BasicNameValuePair basicNameValuePair : val) {
-			System.out.println(basicNameValuePair);
+		Set<BasicNameValuePair> val = null;
+		try {
+			val = psBuilder.addRelativeResolver().addAttachmentHash().addToken().addWatchThreadState()
+					.addLogin("blabla").addPassword("blub").addRegister(null).addCookieCheck(null).addLastDate()
+					.addLastKnownDate().addMessageHtml("Test123").addResponseType(null).addRedirect(null)
+					.addMoreOptions(null).addNoRedirect(null).addRequestUri().build();
+		} catch (ValueNotFoundException e) {
+			e.printStackTrace();
+		}
+		if (val != null) {
+			for (BasicNameValuePair basicNameValuePair : val) {
+				System.out.println(basicNameValuePair);
+			}
 		}
 
 	}
@@ -101,9 +116,9 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addRelativeResolver() {
-		postSet.add(new BasicNameValuePair(PostConstants.RELATIVE_RESOLVER,
-				htmlDoc.select("[name=" + PostConstants.RELATIVE_RESOLVER + "]").attr("value")));
+	PostSetBuilder addRelativeResolver() throws ValueNotFoundException {
+		postSet.add(createBasicNameValuePair(PostConstants.RELATIVE_RESOLVER,
+				"[name=" + PostConstants.RELATIVE_RESOLVER + "]", ATTR_VALUE));
 		return this;
 	}
 
@@ -115,9 +130,8 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addToken() {
-		postSet.add(new BasicNameValuePair(PostConstants.TOKEN,
-				htmlDoc.select("[name=" + PostConstants.TOKEN + "]").attr("value")));
+	PostSetBuilder addToken() throws ValueNotFoundException {
+		postSet.add(createBasicNameValuePair(PostConstants.TOKEN, "[name=" + PostConstants.TOKEN + "]", ATTR_VALUE));
 		return this;
 	}
 
@@ -129,33 +143,42 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addRequestUri() {
-		postSet.add(new BasicNameValuePair(PostConstants.REQUEST_URI, htmlDoc.select("#ThreadReply").attr("action")));
+	PostSetBuilder addRequestUri() throws ValueNotFoundException {
+		postSet.add(createBasicNameValuePair(PostConstants.REQUEST_URI, SELECT_THREAD, ATTR_ACTION));
 		return this;
 	}
 
-	PostSetBuilder addWatchThreadState() {
-		postSet.add(new BasicNameValuePair(PostConstants.WATCH_THREAD_STATE,
-				htmlDoc.select("[name=" + PostConstants.WATCH_THREAD_STATE + "]").attr("value")));
+	PostSetBuilder addWatchThreadState() throws ValueNotFoundException {
+		postSet.add(createBasicNameValuePair(PostConstants.WATCH_THREAD_STATE,
+				"[name=" + PostConstants.WATCH_THREAD_STATE + "]", ATTR_VALUE));
 		return this;
 	}
 
-	PostSetBuilder addLastDate() {
-		postSet.add(new BasicNameValuePair(PostConstants.LAST_DATE,
-				htmlDoc.select("[name=" + PostConstants.LAST_DATE + "]").attr("value")));
+	PostSetBuilder addLastDate() throws ValueNotFoundException {
+		postSet.add(createBasicNameValuePair(PostConstants.LAST_DATE, "[name=" + PostConstants.LAST_DATE + "]",
+				ATTR_VALUE));
 		return this;
 	}
 
-	PostSetBuilder addLastKnownDate() {
-		postSet.add(new BasicNameValuePair(PostConstants.LAST_KNOWN_DATE,
-				htmlDoc.select("[name=" + PostConstants.LAST_KNOWN_DATE + "]").attr("value")));
+	PostSetBuilder addLastKnownDate() throws ValueNotFoundException {
+		postSet.add(createBasicNameValuePair(PostConstants.LAST_KNOWN_DATE,
+				"[name=" + PostConstants.LAST_KNOWN_DATE + "]", ATTR_VALUE));
 		return this;
 	}
 
-	PostSetBuilder addAttachmentHash() {
-		postSet.add(new BasicNameValuePair(PostConstants.ATTACHMENT_HASH,
-				htmlDoc.select("[name=" + PostConstants.ATTACHMENT_HASH + "]").attr("value")));
+	PostSetBuilder addAttachmentHash() throws ValueNotFoundException {
+		postSet.add(createBasicNameValuePair(PostConstants.ATTACHMENT_HASH,
+				"[name=" + PostConstants.ATTACHMENT_HASH + "]", ATTR_VALUE));
 		return this;
+	}
+
+	private BasicNameValuePair createBasicNameValuePair(String postConstant, String selectVal, String attrVal)
+			throws ValueNotFoundException {
+		String parsed = htmlDoc.select(selectVal).attr(attrVal);
+		if (parsed.equals("")) {
+			throw new ValueNotFoundException("Value could not be parsed: " + postConstant);
+		}
+		return new BasicNameValuePair(postConstant, parsed);
 	}
 
 	Set<BasicNameValuePair> build() {
