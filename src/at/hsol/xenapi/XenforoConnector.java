@@ -40,16 +40,10 @@ public class XenforoConnector {
 
 		HttpPost post = new HttpPost(url + UrlConstants.LOGIN);
 		post.setHeader("User-Agent", USER_AGENT);
-		Set<BasicNameValuePair> urlParameters = null;
-		try {
-			urlParameters = new PostSetBuilder("").addLogin(username).addRegister(null).addPassword("admin")
-					.addCookieCheck(null).addRedirect(null).addToken().build();
-		} catch (ValueNotFoundException e1) {
-			// TODO handle error
-			e1.printStackTrace();
-		}
 
 		try {
+			Set<BasicNameValuePair> urlParameters = new PostSetBuilder("").addLogin(username).addRegister(null)
+					.addPassword("admin").addCookieCheck(null).addRedirect(null).addToken().build();
 			String s;
 			post.setEntity(new UrlEncodedFormEntity(urlParameters));
 			CloseableHttpResponse response = (CloseableHttpResponse) client.execute(post, context);
@@ -65,6 +59,9 @@ public class XenforoConnector {
 		} catch (UnsupportedOperationException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ValueNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 
@@ -93,7 +90,7 @@ public class XenforoConnector {
 				: (currentHost.toURI() + currentReq.getURI());
 	}
 
-	public void addReply(String url, String message) {
+	public String addReply(String url, String message) {
 		Set<BasicNameValuePair> vals = getAddreplyHiddenValues(url);
 		try {
 			HttpPost post = new HttpPost(url + UrlConstants.ADD_REPLY);
@@ -105,18 +102,21 @@ public class XenforoConnector {
 			post.setEntity(new UrlEncodedFormEntity(vals));
 
 			CloseableHttpResponse response = (CloseableHttpResponse) client.execute(post, context);
+			String html;
 			try {
 				renewCurrentUrl(response);
 				System.out.println(currentUrl);
 
-				String html = createHtmlString(response);
-				System.out.println(html);
+				html = createHtmlString(response);
 			} finally {
 				response.close();
 			}
+			return html;
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	private Set<BasicNameValuePair> getAddreplyHiddenValues(String url) {
@@ -130,23 +130,27 @@ public class XenforoConnector {
 
 			CloseableHttpResponse response = (CloseableHttpResponse) client.execute(post, context);
 			try {
-				renewCurrentUrl(response);
-				System.out.println(currentUrl);
-
 				String html = createHtmlString(response);
+				renewCurrentUrl(response);
+
 				nameValSet = new PostSetBuilder(html).addToken().addRelativeResolver().addWatchThreadState()
 						.addAttachmentHash().addRequestUri().addNoRedirect(null).addResponseType(null).build();
+				for (BasicNameValuePair basicNameValuePair : values) {
+					System.out.println(basicNameValuePair);
+				}
 			} catch (ValueNotFoundException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-				// TODO handle error
 			} finally {
 				response.close();
 			}
 
 			return nameValSet;
 		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -159,18 +163,24 @@ public class XenforoConnector {
 			CloseableHttpResponse response = (CloseableHttpResponse) client.execute(get, context);
 			try {
 				String html = createHtmlString(response);
+				System.out.println(currentUrl);
+
+				System.out.println(html);
 				nameValSet = new PostSetBuilder(html).addToken().addRelativeResolver().addLastDate().addLastKnownDate()
-						.addAttachmentHash().addMessageHtml(null).build();
+						.addAttachmentHash().addMoreOptions(null).addMessageHtml(null).build();
+
 			} catch (ValueNotFoundException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-				// TODO handle error
 			} finally {
 				response.close();
 			}
 			return nameValSet;
 		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
