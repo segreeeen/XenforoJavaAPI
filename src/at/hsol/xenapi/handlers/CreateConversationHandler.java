@@ -35,7 +35,7 @@ public class CreateConversationHandler extends AbstractHandler {
 					.addMessageHtml(message).addRelativeResolver().addAttachmentHash().addToken().addNoRedirect(null)
 					.addResponseType(null).build();
 
-			HttpPost post = new HttpPost(url + UrlConstants.INSERT_CONVERSATION_REPLY);
+			HttpPost post = new HttpPost(url + UrlConstants.NEW_CONVERSATION_INSERT);
 			post.setHeader("User-Agent", UrlConstants.USER_AGENT);
 
 			post.setEntity(new UrlEncodedFormEntity(values));

@@ -14,6 +14,7 @@ import org.apache.http.protocol.HttpCoreContext;
 import at.hsol.xenapi.handlers.CreateConversationHandler;
 import at.hsol.xenapi.handlers.CreateThreadHandler;
 import at.hsol.xenapi.handlers.LoginHandler;
+import at.hsol.xenapi.handlers.ReplyConversationHandler;
 import at.hsol.xenapi.handlers.ReplyThreadHandler;
 import at.hsol.xenapi.interfaces.Connection;
 
@@ -47,6 +48,10 @@ public class XenforoConnection implements Connection {
 
 	public String createConversation(String url, String title, String message, String recipients) {
 		return new CreateConversationHandler(this).createConversation(url, title, message, recipients);
+	}
+
+	public String replyConversation(String url, String message, String recipients) {
+		return new ReplyConversationHandler(this).replyConversation(url, message, recipients);
 	}
 
 	/**

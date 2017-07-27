@@ -253,8 +253,12 @@ public class PostSetBuilder {
 	}
 
 	public PostSetBuilder addLastKnownDate() throws ValueNotFoundException {
-		postSet.add(createBasicNameValuePair(PostConstants.LAST_KNOWN_DATE,
-				"[name=" + PostConstants.LAST_KNOWN_DATE + "]", SelectConstants.ATTR_VALUE));
+		try {
+			postSet.add(createBasicNameValuePair(PostConstants.LAST_KNOWN_DATE,
+					"[name=" + PostConstants.LAST_KNOWN_DATE + "]", SelectConstants.ATTR_VALUE));
+		} catch (ValueNotFoundException e) {
+			postSet.add(new BasicNameValuePair(PostConstants.LAST_KNOWN_DATE, ""));
+		}
 		return this;
 	}
 
