@@ -55,12 +55,12 @@ public class PostSetBuilder {
 
 	}
 
-	PostSetBuilder(String html) {
+	public PostSetBuilder(String html) {
 		this.htmlDoc = Jsoup.parse(html);
 		this.postSet = new HashSet<>();
 	}
 
-	PostSetBuilder addLogin(String s) {
+	public PostSetBuilder addLogin(String s) {
 		if (s == null) {
 			throw new NullPointerException();
 		}
@@ -68,7 +68,7 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addRegister(String s) {
+	public PostSetBuilder addRegister(String s) {
 		if (s == null) {
 			s = PostConstants.REGISTER_OFF;
 		}
@@ -76,7 +76,7 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addPassword(String s) {
+	public PostSetBuilder addPassword(String s) {
 		if (s == null) {
 			throw new NullPointerException();
 		}
@@ -84,7 +84,7 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addCookieCheck(String s) {
+	public PostSetBuilder addCookieCheck(String s) {
 		if (s == null) {
 			s = PostConstants.COOKIE_CHECK_DEFAULT;
 		}
@@ -92,7 +92,7 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addRedirect(String s) {
+	public PostSetBuilder addRedirect(String s) {
 		if (s == null) {
 			s = PostConstants.REDIRECT_ROOT;
 		}
@@ -100,7 +100,7 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addMoreOptions(String s) {
+	public PostSetBuilder addMoreOptions(String s) {
 		if (s == null) {
 			s = PostConstants.MORE_OPIONS_VALUE;
 		}
@@ -108,7 +108,7 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addMessageHtml(String s) {
+	public PostSetBuilder addMessageHtml(String s) {
 		if (s == null) {
 			s = PostConstants.MESSAGE_HTML_DEFAULT;
 		}
@@ -116,13 +116,13 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addRelativeResolver() throws ValueNotFoundException {
+	public PostSetBuilder addRelativeResolver() throws ValueNotFoundException {
 		postSet.add(createBasicNameValuePair(PostConstants.RELATIVE_RESOLVER,
 				"[name=" + PostConstants.RELATIVE_RESOLVER + "]", ATTR_VALUE));
 		return this;
 	}
 
-	PostSetBuilder addResponseType(String s) {
+	public PostSetBuilder addResponseType(String s) {
 		if (s == null) {
 			s = PostConstants.RESPONSE_TYPE_DEFAULT;
 		}
@@ -130,7 +130,7 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addToken() throws ValueNotFoundException {
+	public PostSetBuilder addToken() throws ValueNotFoundException {
 		try {
 			postSet.add(
 					createBasicNameValuePair(PostConstants.TOKEN, "[name=" + PostConstants.TOKEN + "]", ATTR_VALUE));
@@ -140,7 +140,7 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addNoRedirect(String s) {
+	public PostSetBuilder addNoRedirect(String s) {
 		if (s == null) {
 			s = PostConstants.NO_REDIRECT_DEFAULT;
 		}
@@ -148,30 +148,30 @@ public class PostSetBuilder {
 		return this;
 	}
 
-	PostSetBuilder addRequestUri() throws ValueNotFoundException {
+	public PostSetBuilder addRequestUri() throws ValueNotFoundException {
 		postSet.add(createBasicNameValuePair(PostConstants.REQUEST_URI, SELECT_THREAD, ATTR_ACTION));
 		return this;
 	}
 
-	PostSetBuilder addWatchThreadState() throws ValueNotFoundException {
+	public PostSetBuilder addWatchThreadState() throws ValueNotFoundException {
 		postSet.add(createBasicNameValuePair(PostConstants.WATCH_THREAD_STATE,
 				"[name=" + PostConstants.WATCH_THREAD_STATE + "]", ATTR_VALUE));
 		return this;
 	}
 
-	PostSetBuilder addLastDate() throws ValueNotFoundException {
+	public PostSetBuilder addLastDate() throws ValueNotFoundException {
 		postSet.add(createBasicNameValuePair(PostConstants.LAST_DATE, "[name=" + PostConstants.LAST_DATE + "]",
 				ATTR_VALUE));
 		return this;
 	}
 
-	PostSetBuilder addLastKnownDate() throws ValueNotFoundException {
+	public PostSetBuilder addLastKnownDate() throws ValueNotFoundException {
 		postSet.add(createBasicNameValuePair(PostConstants.LAST_KNOWN_DATE,
 				"[name=" + PostConstants.LAST_KNOWN_DATE + "]", ATTR_VALUE));
 		return this;
 	}
 
-	PostSetBuilder addAttachmentHash() throws ValueNotFoundException {
+	public PostSetBuilder addAttachmentHash() throws ValueNotFoundException {
 		postSet.add(createBasicNameValuePair(PostConstants.ATTACHMENT_HASH,
 				"[name=" + PostConstants.ATTACHMENT_HASH + "]", ATTR_VALUE));
 		return this;
@@ -186,7 +186,7 @@ public class PostSetBuilder {
 		return new BasicNameValuePair(postConstant, parsed);
 	}
 
-	Set<BasicNameValuePair> build() {
+	public Set<BasicNameValuePair> build() {
 		return postSet;
 	}
 }
