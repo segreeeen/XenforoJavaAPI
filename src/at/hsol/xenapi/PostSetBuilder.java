@@ -145,9 +145,19 @@ public class PostSetBuilder {
 
 	public PostSetBuilder addTags(String s) {
 		if (s == null) {
-			s = PostConstants.TAGS_DEFAUL;
+			s = PostConstants.TAGS_DEFAULT;
 		}
 		postSet.add(new BasicNameValuePair(PostConstants.TAGS, s));
+
+		return this;
+	}
+
+	public PostSetBuilder addRecipients(String s) throws ValueNotFoundException {
+		if (s == null) {
+			throw new ValueNotFoundException("Recipients can not be null!");
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.RECIPIENTS, s));
+
 		return this;
 	}
 

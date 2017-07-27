@@ -10,50 +10,32 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 
 import at.hsol.xenapi.PostSetBuilder;
-import at.hsol.xenapi.SelectConstants;
 import at.hsol.xenapi.UrlConstants;
 import at.hsol.xenapi.err.ValueNotFoundException;
 import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.Tools;
 
-public class AddThreadHandler extends AbstractHandler {
+public class CreateConversationHandler extends AbstractHandler {
 
-	public AddThreadHandler(Connection connection) {
+	public CreateConversationHandler(Connection connection) {
 		super(connection);
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * 
-	 * @param url
-	 *            Url of the Forum the new Thread should be created in.
-	 * @param title
-	 * @param message
-	 * @param tags
-	 * @return
-	 */
-	public String addNewThread(String url, String title, String message, String... tags) {
-		HttpGet get = new HttpGet(url + UrlConstants.CREATE_THREAD);
-
+	public String createConversation(String url, String title, String message, String recipients) {
+		HttpGet get = new HttpGet(url + UrlConstants.CREATE_CONVERSATION);
 		try {
 			CloseableHttpResponse response = (CloseableHttpResponse) getClient().execute(get, getContext());
 			String html = null;
 			try {
 				html = Tools.createHtmlString(response);
-				System.out.println();
 			} finally {
 				response.close();
 			}
-			Set<BasicNameValuePair> values = new PostSetBuilder(html).addTitle(title).addMessageHtml(message)
-					.addRelativeResolver().addTags(null).addAttachmentHash().addWatchThreadState()
-					.addDiscussionOpen(null).addSetDiscussionOpen(null).addSetSticky(null).addPollQuestion(null)
-					.addPollResponse(null).addPollResponse(null).addPollMaxVotesType(null).addPollChangeVote(null)
-					.addPollViewResultsUnvoted(null).addToken().addRequestUri(SelectConstants.ID_THREAD_CREATE)
-					.addNoRedirect(null).addResponseType(null).build();
-			for (BasicNameValuePair basicNameValuePair : values) {
-				System.out.println(basicNameValuePair);
-			}
-			HttpPost post = new HttpPost(url + UrlConstants.ADD_THREAD);
+			Set<BasicNameValuePair> values = new PostSetBuilder(html).addRecipients(recipients).addTitle(title)
+					.addMessageHtml(message).addRelativeResolver().addAttachmentHash().addToken().addNoRedirect(null)
+					.addResponseType(null).build();
+
+			HttpPost post = new HttpPost(url + UrlConstants.INSERT_CONVERSATION_REPLY);
 			post.setHeader("User-Agent", UrlConstants.USER_AGENT);
 
 			post.setEntity(new UrlEncodedFormEntity(values));

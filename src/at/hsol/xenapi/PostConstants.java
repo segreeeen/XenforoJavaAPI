@@ -37,7 +37,8 @@ public class PostConstants {
 
 	public static final String TITLE = "title";
 	public static final String TAGS = "tags";
-	public static final String TAGS_DEFAUL = "";
+	public static final String TAGS_DEFAULT = "";
+	public static final String RECIPIENTS = "recipients";
 	public static final String DISCUSSION_OPEN = "discussion_open";
 	public static final String DISCUSSION_OPEN_DEFAULT = "1";
 

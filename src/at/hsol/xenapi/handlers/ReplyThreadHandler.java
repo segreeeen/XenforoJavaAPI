@@ -18,13 +18,13 @@ import at.hsol.xenapi.err.ValueNotFoundException;
 import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.Tools;
 
-public class AddReplyHandler extends AbstractHandler {
+public class ReplyThreadHandler extends AbstractHandler {
 
-	public AddReplyHandler(Connection connection) {
+	public ReplyThreadHandler(Connection connection) {
 		super(connection);
 	}
 
-	public String addReply(String url, String message) {
+	public String addThreadReply(String url, String message) {
 		Set<BasicNameValuePair> vals = getAddreplyHiddenValues(url);
 		try {
 			HttpPost post = new HttpPost(url + UrlConstants.ADD_REPLY);
