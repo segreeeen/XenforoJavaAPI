@@ -5,8 +5,8 @@ public class Test {
 		XenforoConnection con = new XenforoConnection();
 		String result = con.login("http://85f7e9e12144d9f8.demo-xenforo.com/1510/index.php", "admin", "admin");
 		if (result != null) {
-			con.addReply("http://85f7e9e12144d9f8.demo-xenforo.com/1510/index.php?threads/testthread.1/",
-					"<p>Buh, bah, beh</p>");
+			con.addNewThread("http://85f7e9e12144d9f8.demo-xenforo.com/1510/index.php?forums/main-forum.2/", "abcd",
+					"yeeeahgggggggggggggg", "<p>maybe!</p>");
 		}
 
 	}

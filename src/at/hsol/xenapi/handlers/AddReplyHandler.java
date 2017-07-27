@@ -12,6 +12,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import at.hsol.xenapi.PostConstants;
 import at.hsol.xenapi.PostSetBuilder;
+import at.hsol.xenapi.SelectConstants;
 import at.hsol.xenapi.UrlConstants;
 import at.hsol.xenapi.err.ValueNotFoundException;
 import at.hsol.xenapi.interfaces.Connection;
@@ -65,7 +66,8 @@ public class AddReplyHandler extends AbstractHandler {
 				super.renewCurrentUrl(response);
 
 				nameValSet = new PostSetBuilder(html).addToken().addRelativeResolver().addWatchThreadState()
-						.addAttachmentHash().addRequestUri().addNoRedirect(null).addResponseType(null).build();
+						.addAttachmentHash().addRequestUri(SelectConstants.ID_THREAD_REPLY).addNoRedirect(null)
+						.addResponseType(null).build();
 				for (BasicNameValuePair basicNameValuePair : values) {
 					System.out.println(basicNameValuePair);
 				}

@@ -34,4 +34,26 @@ public class PostConstants {
 	public static final String LAST_DATE = "last_date";
 	public static final String LAST_KNOWN_DATE = "last_known_date";
 	public static final String ATTACHMENT_HASH = "attachment_hash";
+
+	public static final String TITLE = "title";
+	public static final String TAGS = "tags";
+	public static final String TAGS_DEFAUL = "";
+	public static final String DISCUSSION_OPEN = "discussion_open";
+	public static final String DISCUSSION_OPEN_DEFAULT = "1";
+
+	public static final String SET_DISCUSSION_OPEN = "_set[discussion_open]";
+	public static final String SET_DISCUSSION_OPEN_DEFAULT = "1";
+	public static final String SET_STICKY = "_set[sticky]";
+	public static final String SET_STICKY_DEFAULT = "1";
+	public static final String POLL_QUESTION = "poll[question]";
+	public static final String POLL_QUESTION_DEFAULT = "";
+	public static final String POLL_RESPONSES = "poll[responses][]";
+	public static final String POLL_RESPONSES_DEFAULT = "";
+	public static final String POLL_MAX_VOTES_TYPE = "poll[max_votes_type]";
+	public static final String POLL_MAX_VOTES_TYPE_DEFAULT = "single";
+	public static final String POLL_CHANGE_VOTE = "poll[change_vote]";
+	public static final String POLL_CHANGE_VOTE_DEFAULT = "1";
+	public static final String POLL_VIEW_RESULTS_UNVOTED = "poll[view_results_unvoted]";
+	public static final String POLL_VIEW_RESULTS_UNVOTED_DEFAULT = "1";
+
 }
