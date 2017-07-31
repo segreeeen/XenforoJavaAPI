@@ -1,4 +1,4 @@
-package at.hsol.xenapi;
+package at.hsol.xenapi.constants;
 
 public class UrlConstants {
 	public static final String LOGIN = "/login/login";

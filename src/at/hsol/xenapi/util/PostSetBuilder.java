@@ -1,4 +1,4 @@
-package at.hsol.xenapi;
+package at.hsol.xenapi.util;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +7,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import at.hsol.xenapi.constants.PostConstants;
+import at.hsol.xenapi.constants.SelectConstants;
 import at.hsol.xenapi.err.ValueNotFoundException;
 
 /**

@@ -1,4 +1,4 @@
-package at.hsol.xenapi;
+package at.hsol.xenapi.constants;
 
 public class PostConstants {
 	// Use for Login
