@@ -13,46 +13,16 @@ import at.hsol.xenapi.err.ValueNotFoundException;
 
 /**
  * This class builds a set of post values which it reads from the html string
- * provided in the constructor. To build the set, call the add functions.
+ * provided in the constructor or with a default value. To build the set, call
+ * the add functions and finally build() to receive the set.
  * 
  * @author Felix Batusic, thomassulzbacher
  *
  */
 public class PostSetBuilder {
 
-	// constants
-
 	private final Set<BasicNameValuePair> postSet;
 	private final Document htmlDoc;
-
-	public static void main(String[] args) {
-		String s = "<input type=\"hidden\" name=\"watch_thread_state\" value=\"1\">"
-				+ "		<input type=\"hidden\" name=\"_xfToken\" value=\"4308,1501060148,a4d53c77938a734f59a0c4ff4252c4d16bf46a37\">\r\n"
-				+ "		<input type=\"hidden\" name=\"attachment_hash\" value=\"517b809031c2902f368e1b7f72442328\">\r\n"
-				+ "		<input type=\"hidden\" name=\"_xfRelativeResolver\" value=\"http://www.hoer-talk.de/threads/forenspiel-licht-an-licht-aus.19072/add-reply\">"
-				+ "<input type=\"hidden\" name=\"last_date\" value=\"1379833388\" data-load-value=\"1379833388\">\r\n"
-				+ "<input type=\"hidden\" name=\"last_known_date\" value=\"1501014954\">"
-				+ "<form action=\"threads/forenspiel-licht-an-licht-aus.19072/add-reply\" method=\"post\" id=\"ThreadReply\"\r\n"
-				+ "	class=\"xenForm Preview AutoValidator\"\r\n"
-				+ "	data-previewUrl=\"threads/forenspiel-licht-an-licht-aus.19072/reply/preview\"\r\n"
-				+ "	data-redirect=\"on\">";
-		PostSetBuilder psBuilder = new PostSetBuilder(s);
-		Set<BasicNameValuePair> val = null;
-		try {
-			val = psBuilder.addRelativeResolver().addAttachmentHash().addToken().addWatchThreadState()
-					.addLogin("blabla").addPassword("blub").addRegister(null).addCookieCheck(null).addLastDate()
-					.addLastKnownDate().addMessageHtml("Test123").addResponseType(null).addRedirect(null)
-					.addMoreOptions(null).addNoRedirect(null).addRequestUri(SelectConstants.ID_THREAD_REPLY).build();
-		} catch (ValueNotFoundException e) {
-			e.printStackTrace();
-		}
-		if (val != null) {
-			for (BasicNameValuePair basicNameValuePair : val) {
-				System.out.println(basicNameValuePair);
-			}
-		}
-
-	}
 
 	public PostSetBuilder(String html) {
 		this.htmlDoc = Jsoup.parse(html);
@@ -163,6 +133,15 @@ public class PostSetBuilder {
 		return this;
 	}
 
+	public PostSetBuilder addMessage(String s) throws ValueNotFoundException {
+		if (s == null) {
+			throw new ValueNotFoundException("Message can not be null!");
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.MESSAGE, s));
+
+		return this;
+	}
+
 	public PostSetBuilder addSetDiscussionOpen(String s) {
 		if (s == null) {
 			s = PostConstants.SET_DISCUSSION_OPEN_DEFAULT;
@@ -267,6 +246,70 @@ public class PostSetBuilder {
 	public PostSetBuilder addAttachmentHash() throws ValueNotFoundException {
 		postSet.add(createBasicNameValuePair(PostConstants.ATTACHMENT_HASH,
 				"[name=" + PostConstants.ATTACHMENT_HASH + "]", SelectConstants.ATTR_VALUE));
+		return this;
+	}
+
+	public PostSetBuilder addKeywords(String s) {
+		if (s == null) {
+			s = PostConstants.KEYWORDS_DEFAULT;
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.KEYWORDS, s));
+		return this;
+	}
+
+	public PostSetBuilder addUsers(String s) {
+		if (s == null) {
+			s = PostConstants.USERS_DEFAULT;
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.USERS, s));
+		return this;
+	}
+
+	public PostSetBuilder addDate(String s) {
+		if (s == null) {
+			s = PostConstants.DATE_DEFAULT;
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.DATE, s));
+		return this;
+	}
+
+	public PostSetBuilder addNodes(String s) {
+		if (s == null) {
+			s = PostConstants.NODES_DEFAULT;
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.NODES, s));
+		return this;
+	}
+
+	public PostSetBuilder addChildNodes(String s) {
+		if (s == null) {
+			s = PostConstants.CHILD_NODES_DEFAULT;
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.CHILD_NODES, s));
+		return this;
+	}
+
+	public PostSetBuilder addOrder(String s) {
+		if (s == null) {
+			s = PostConstants.ORDER_DEFAULT;
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.ORDER, s));
+		return this;
+	}
+
+	public PostSetBuilder addSearchTypePost(String s) {
+		if (s == null) {
+			s = PostConstants.SEARCH_TYPE_POST;
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.SEARCH_TYPE, s));
+		return this;
+	}
+
+	public PostSetBuilder addProfileUsers(String s) {
+		if (s == null) {
+			s = PostConstants.PROFILE_USERS_DEFAULT;
+		}
+		postSet.add(new BasicNameValuePair(PostConstants.PROFILE_USERS, s));
 		return this;
 	}
 

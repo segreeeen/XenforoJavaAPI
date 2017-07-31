@@ -13,4 +13,6 @@ public class UrlConstants {
 	public static final String SEARCH = "/?search";
 	public static final String SEARCH_POST = SEARCH + "&type=post";
 	public static final String SEARCH_PROFILE_POST = SEARCH + "&type=profile_post";
+	public static final String SEARCH_ACTION_SUFFIX = SEARCH + "/search";
+	public static final String PROFILE_POST_ACTION = "/post";
 }

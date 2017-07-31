@@ -14,15 +14,16 @@ import org.apache.http.protocol.HttpCoreContext;
 import at.hsol.xenapi.handlers.CreateConversationHandler;
 import at.hsol.xenapi.handlers.CreateThreadHandler;
 import at.hsol.xenapi.handlers.LoginHandler;
+import at.hsol.xenapi.handlers.ProfilePostHandler;
 import at.hsol.xenapi.handlers.ReplyConversationHandler;
 import at.hsol.xenapi.handlers.ReplyThreadHandler;
+import at.hsol.xenapi.handlers.SearchHandler;
 import at.hsol.xenapi.interfaces.Connection;
 
 public class XenforoConnection implements Connection {
 
 	private final HttpClient client;
 	private final HttpClientContext context;
-
 	private String currentUrl;
 
 	public XenforoConnection() {
@@ -78,6 +79,30 @@ public class XenforoConnection implements Connection {
 	 */
 	public String addNewThread(String url, String title, String message, String tags) {
 		return new CreateThreadHandler(this).addNewThread(url, title, message, tags);
+	}
+
+	/**
+	 * @param url
+	 *            the url of the forum index
+	 * @param keywords
+	 *            keywords to look after
+	 * @param users
+	 *            users who authored the post
+	 * @param date
+	 *            only look for posts newer than date
+	 * @param childNodes
+	 *            search child forums as well
+	 * @param titleOnly
+	 *            only look for keywords in the title
+	 * @return
+	 */
+	public String searchEverything(String url, String keywords, String users, String date, String childNodes,
+			String titleOnly) {
+		return new SearchHandler(this).searchEverything(url, keywords, users, date, childNodes, titleOnly);
+	}
+
+	public String addProfilePost(String url, String message) {
+		return new ProfilePostHandler(this).addProfilePost(url, message);
 	}
 
 	@Override

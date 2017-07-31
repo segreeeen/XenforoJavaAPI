@@ -15,7 +15,7 @@ import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.PostSetBuilder;
 import at.hsol.xenapi.util.Tools;
 
-public class CreateConversationHandler extends AbstractConnectionHandler {
+public class CreateConversationHandler extends AbstractFunctionalityHandler {
 
 	public CreateConversationHandler(Connection connection) {
 		super(connection);
@@ -24,13 +24,7 @@ public class CreateConversationHandler extends AbstractConnectionHandler {
 	public String createConversation(String url, String title, String message, String recipients) {
 		HttpGet get = new HttpGet(url + UrlConstants.CREATE_CONVERSATION);
 		try {
-			CloseableHttpResponse response = (CloseableHttpResponse) getClient().execute(get, getContext());
-			String html = null;
-			try {
-				html = Tools.createHtmlString(response);
-			} finally {
-				response.close();
-			}
+			String html = Tools.executeHttpRequest(this, get, false);
 			Set<BasicNameValuePair> values = new PostSetBuilder(html).addRecipients(recipients).addTitle(title)
 					.addMessageHtml(message).addRelativeResolver().addAttachmentHash().addToken().addNoRedirect(null)
 					.addResponseType(null).build();
@@ -40,7 +34,7 @@ public class CreateConversationHandler extends AbstractConnectionHandler {
 
 			post.setEntity(new UrlEncodedFormEntity(values));
 
-			response = (CloseableHttpResponse) getClient().execute(post, getContext());
+			CloseableHttpResponse response = (CloseableHttpResponse) getClient().execute(post, getContext());
 			try {
 				renewCurrentUrl(response);
 				html = Tools.createHtmlString(response);

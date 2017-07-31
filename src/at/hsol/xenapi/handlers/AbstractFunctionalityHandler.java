@@ -6,25 +6,33 @@ import org.apache.http.client.protocol.HttpClientContext;
 
 import at.hsol.xenapi.interfaces.Connection;
 
-public abstract class AbstractConnectionHandler {
+public abstract class AbstractFunctionalityHandler implements Connection {
 	private Connection connection;
 	protected String currentUrl;
 
-	public AbstractConnectionHandler(Connection connection) {
+	public AbstractFunctionalityHandler(Connection connection) {
 		this.connection = connection;
 		this.currentUrl = connection.getCurrenUrl();
 	}
 
-	protected String renewCurrentUrl(HttpResponse response) {
+	@Override
+	public String renewCurrentUrl(HttpResponse response) {
 		this.currentUrl = connection.renewCurrentUrl(response);
 		return this.currentUrl;
 	}
 
-	protected HttpClient getClient() {
+	@Override
+	public HttpClient getClient() {
 		return connection.getClient();
 	}
 
-	protected HttpClientContext getContext() {
+	@Override
+	public HttpClientContext getContext() {
 		return connection.getContext();
+	}
+
+	@Override
+	public String getCurrenUrl() {
+		return connection.getCurrenUrl();
 	}
 }

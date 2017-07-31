@@ -18,7 +18,7 @@ import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.PostSetBuilder;
 import at.hsol.xenapi.util.Tools;
 
-public class ReplyThreadHandler extends AbstractConnectionHandler {
+public class ReplyThreadHandler extends AbstractFunctionalityHandler {
 
 	public ReplyThreadHandler(Connection connection) {
 		super(connection);
@@ -26,29 +26,16 @@ public class ReplyThreadHandler extends AbstractConnectionHandler {
 
 	public String addThreadReply(String url, String message) {
 		Set<BasicNameValuePair> vals = getAddreplyHiddenValues(url);
-		try {
-			HttpPost post = new HttpPost(url + UrlConstants.ADD_REPLY);
-			post.setHeader("User-Agent", UrlConstants.USER_AGENT);
-			vals.add(new BasicNameValuePair(PostConstants.MESSAGE_HTML_NAME, message));
-			for (BasicNameValuePair basicNameValuePair : vals) {
-				System.out.println(basicNameValuePair);
-			}
-			post.setEntity(new UrlEncodedFormEntity(vals));
-
-			CloseableHttpResponse response = (CloseableHttpResponse) getClient().execute(post, getContext());
-			String html;
-			try {
-				renewCurrentUrl(response);
-				html = Tools.createHtmlString(response);
-			} finally {
-				response.close();
-			}
-			return html;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		HttpPost post = new HttpPost(url + UrlConstants.ADD_REPLY);
+		post.setHeader("User-Agent", UrlConstants.USER_AGENT);
+		vals.add(new BasicNameValuePair(PostConstants.MESSAGE_HTML_NAME, message));
+		for (BasicNameValuePair basicNameValuePair : vals) {
+			System.out.println(basicNameValuePair);
 		}
-		return null;
+		post.setEntity(new UrlEncodedFormEntity(vals));
+
+		String html = Tools.executeHttpRequest(this, post, true);
+		return html;
 	}
 
 	private Set<BasicNameValuePair> getAddreplyHiddenValues(String url) {
@@ -68,9 +55,6 @@ public class ReplyThreadHandler extends AbstractConnectionHandler {
 				nameValSet = new PostSetBuilder(html).addToken().addRelativeResolver().addWatchThreadState()
 						.addAttachmentHash().addRequestUri(SelectConstants.ID_THREAD_REPLY).addNoRedirect(null)
 						.addResponseType(null).build();
-				for (BasicNameValuePair basicNameValuePair : values) {
-					System.out.println(basicNameValuePair);
-				}
 			} catch (ValueNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -96,9 +80,6 @@ public class ReplyThreadHandler extends AbstractConnectionHandler {
 			CloseableHttpResponse response = (CloseableHttpResponse) getClient().execute(get, getContext());
 			try {
 				String html = Tools.createHtmlString(response);
-				System.out.println(currentUrl);
-
-				System.out.println(html);
 				nameValSet = new PostSetBuilder(html).addToken().addRelativeResolver().addLastDate().addLastKnownDate()
 						.addAttachmentHash().addMoreOptions(null).addMessageHtml(null).build();
 
