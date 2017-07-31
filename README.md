@@ -3,7 +3,7 @@
 __IMPORTANT!  *This is not an official library by Xenforo Ltd.*__
 
 ### About:
-As the popular forum software Xenoforo (see link in Sources Section) unfortunately does not have an API, for creating bots or other third party applications, we are currently working on a simple and lightweight http-based approach to access the forum and it's functionalities.
+As the popular forum software Xenoforo (see link in Sources Section) unfortunately does not have a built-in API, for creating bots and other third party applications, we are currently working on a simple and lightweight HTTP-based approach to access the forum and it's functionalities without the need to modify the target forum in any way. Just enter the URL and the library handles the rest.
 
 ### Status
 
@@ -21,8 +21,17 @@ __We are currently working on basic functionality__
    * Creating Conversations ![Working](/img/green_tickoff.png)
    * Replying to Conversations ![Working](/img/green_tickoff.png)
 * Searching
-* Changing Profile Settings
-
+   * Search for Messages
+   * Search for Posts
+   * Search for Profile Posts
+* Profile Settings
+   * Set or edit Signature
+   * Set personal details
+   * Set contact details
+   * Configure Privacy Settings
+   * Set preferences
+   * Set alert preferences
+   * Set password
 We try to constantly add new functionalities as we want to cover the whole feature-set of Xenoforo.
 
 ### Tutorial & Usage
