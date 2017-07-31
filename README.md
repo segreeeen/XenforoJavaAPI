@@ -18,7 +18,8 @@ __We are currently working on basic functionality__
    * Creating new Threads ![Working](/img/green_tickoff.png)
    * Creating Thread Answers ![Working](/img/green_tickoff.png)
 * Messaging
-   * Sending private Messages
+   * Creating Conversations ![Working](/img/green_tickoff.png)
+   * Replying to Conversations ![Working](/img/green_tickoff.png)
 * Searching
 * Changing Profile Settings
 
