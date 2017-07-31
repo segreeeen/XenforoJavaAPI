@@ -21,8 +21,17 @@ __We are currently working on basic functionality__
    * Creating Conversations ![Working](/img/green_tickoff.png)
    * Replying to Conversations ![Working](/img/green_tickoff.png)
 * Searching
-* Changing Profile Settings
-
+   * Search for Messages
+   * Search for Posts
+   * Search for Profile Posts
+* Profile Settings
+   * Set or edit Signature
+   * Set personal details
+   * Set contact details
+   * Configure Privacy Settings
+   * Set preferences
+   * Set alert preferences
+   * Set password
 We try to constantly add new functionalities as we want to cover the whole feature-set of Xenoforo.
 
 ### Tutorial & Usage
