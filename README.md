@@ -3,7 +3,7 @@
 __IMPORTANT!  *This is not an official library by Xenforo Ltd.*__
 
 ### About:
-As the popular forum software Xenoforo (see link in Sources Section) unfortunately does not have an API, for creating bots or other third party applications, we are currently working on a simple and lightweight http-based approach to access the forum and it's functionalities.
+As the popular forum software Xenoforo (see link in Sources Section) unfortunately does not have a built-in API, for creating bots and other third party applications, we are currently working on a simple and lightweight HTTP-based approach to access the forum and it's functionalities without the need to modify the target forum in any way. Just enter the URL and the library handles the rest.
 
 ### Status
 
