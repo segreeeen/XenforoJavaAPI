@@ -9,10 +9,10 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 
-import at.hsol.xenapi.PostSetBuilder;
-import at.hsol.xenapi.UrlConstants;
+import at.hsol.xenapi.constants.UrlConstants;
 import at.hsol.xenapi.err.ValueNotFoundException;
 import at.hsol.xenapi.interfaces.Connection;
+import at.hsol.xenapi.util.PostSetBuilder;
 import at.hsol.xenapi.util.Tools;
 
 public class LoginHandler extends AbstractHandler {
