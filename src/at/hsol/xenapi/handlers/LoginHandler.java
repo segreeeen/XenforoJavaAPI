@@ -28,7 +28,7 @@ public class LoginHandler extends AbstractHandler {
 
 		try {
 			Set<BasicNameValuePair> urlParameters = new PostSetBuilder("").addLogin(username).addRegister(null)
-					.addPassword("admin").addCookieCheck(null).addRedirect(null).addToken().build();
+					.addPassword(password).addCookieCheck(null).addRedirect(null).addToken().build();
 			String s;
 			post.setEntity(new UrlEncodedFormEntity(urlParameters));
 			CloseableHttpResponse response = (CloseableHttpResponse) getClient().execute(post, getContext());
