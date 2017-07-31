@@ -15,7 +15,7 @@ import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.PostSetBuilder;
 import at.hsol.xenapi.util.Tools;
 
-public class CreateConversationHandler extends AbstractHandler {
+public class CreateConversationHandler extends AbstractConnectionHandler {
 
 	public CreateConversationHandler(Connection connection) {
 		super(connection);
@@ -35,7 +35,7 @@ public class CreateConversationHandler extends AbstractHandler {
 					.addMessageHtml(message).addRelativeResolver().addAttachmentHash().addToken().addNoRedirect(null)
 					.addResponseType(null).build();
 
-			HttpPost post = new HttpPost(url + UrlConstants.NEW_CONVERSATION_INSERT);
+			HttpPost post = new HttpPost(url + UrlConstants.INSERT_CONVERSATION);
 			post.setHeader("User-Agent", UrlConstants.USER_AGENT);
 
 			post.setEntity(new UrlEncodedFormEntity(values));

@@ -18,7 +18,7 @@ import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.PostSetBuilder;
 import at.hsol.xenapi.util.Tools;
 
-public class ReplyThreadHandler extends AbstractHandler {
+public class ReplyThreadHandler extends AbstractConnectionHandler {
 
 	public ReplyThreadHandler(Connection connection) {
 		super(connection);

@@ -15,7 +15,7 @@ import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.PostSetBuilder;
 import at.hsol.xenapi.util.Tools;
 
-public class LoginHandler extends AbstractHandler {
+public class LoginHandler extends AbstractConnectionHandler {
 
 	public LoginHandler(Connection connection) {
 		super(connection);
