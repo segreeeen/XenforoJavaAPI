@@ -1,6 +1,7 @@
 package at.hsol.xenapi;
 
 import at.hsol.xenapi.handlers.HandlerFactory;
+import at.hsol.xenapi.interfaces.Connection;
 
 public class XenforoJavaAPI {
 
@@ -84,6 +85,10 @@ public class XenforoJavaAPI {
 
 	public String addProfilePost(String url, String message) {
 		return HandlerFactory.createProfilePostHandler(connection).addProfilePost(url, message);
+	}
+
+	public Connection getConnection() {
+		return this.connection;
 	}
 
 }
