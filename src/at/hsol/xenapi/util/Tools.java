@@ -8,6 +8,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import at.hsol.xenapi.interfaces.Connection;
 
@@ -41,15 +42,22 @@ public class Tools {
 				if (renewCurrentUrl) {
 					con.renewCurrentUrl(response);
 				}
+				return html;
 			} finally {
 				response.close();
 			}
-			return html;
+
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	public static String parseJsonResponse(String json) {
+		JSONObject obj = new JSONObject(json);
+		obj.getString("");
 		return null;
 	}
 

@@ -14,9 +14,9 @@ import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.PostSetBuilder;
 import at.hsol.xenapi.util.Tools;
 
-public class CreateThreadHandler extends AbstractFunctionalityHandler {
+public class NewThreadHandler extends AbstractFunctionalityHandler {
 
-	public CreateThreadHandler(Connection connection) {
+	NewThreadHandler(Connection connection) {
 		super(connection);
 		// TODO Auto-generated constructor stub
 	}
@@ -39,6 +39,7 @@ public class CreateThreadHandler extends AbstractFunctionalityHandler {
 			post.setEntity(new UrlEncodedFormEntity(values));
 
 			html = Tools.executeHttpRequest(this, post, true);
+			return html;
 		} catch (ValueNotFoundException e) {
 			e.printStackTrace();
 		}

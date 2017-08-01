@@ -15,12 +15,12 @@ import at.hsol.xenapi.util.Tools;
 
 public class ReplyConversationHandler extends AbstractFunctionalityHandler {
 
-	public ReplyConversationHandler(Connection connection) {
+	ReplyConversationHandler(Connection connection) {
 		super(connection);
 
 	}
 
-	public String replyConversation(String url, String message, String recipients) {
+	public String replyConversation(String url, String message) {
 		HttpGet get = new HttpGet(url);
 		try {
 			String html = Tools.executeHttpRequest(this, get, false);
@@ -35,7 +35,7 @@ public class ReplyConversationHandler extends AbstractFunctionalityHandler {
 			html = Tools.executeHttpRequest(this, post, true);
 
 			values = new PostSetBuilder(html).addMessageHtml(message).addRelativeResolver().addAttachmentHash()
-					.addToken().build();
+					.addToken().addResponseType(null).build();
 
 			post = new HttpPost(url + UrlConstants.INSERT_REPLY);
 			post.setHeader("User-Agent", UrlConstants.USER_AGENT);
@@ -43,6 +43,7 @@ public class ReplyConversationHandler extends AbstractFunctionalityHandler {
 			post.setEntity(new UrlEncodedFormEntity(values));
 
 			html = Tools.executeHttpRequest(this, post, true);
+			return html;
 		} catch (ValueNotFoundException e) {
 			e.printStackTrace();
 		}

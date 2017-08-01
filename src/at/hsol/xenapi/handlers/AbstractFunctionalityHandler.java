@@ -6,11 +6,11 @@ import org.apache.http.client.protocol.HttpClientContext;
 
 import at.hsol.xenapi.interfaces.Connection;
 
-public abstract class AbstractFunctionalityHandler implements Connection {
+abstract class AbstractFunctionalityHandler implements Connection {
 	private Connection connection;
 	protected String currentUrl;
 
-	public AbstractFunctionalityHandler(Connection connection) {
+	AbstractFunctionalityHandler(Connection connection) {
 		this.connection = connection;
 		this.currentUrl = connection.getCurrenUrl();
 	}

@@ -20,7 +20,7 @@ import at.hsol.xenapi.util.Tools;
 
 public class ReplyThreadHandler extends AbstractFunctionalityHandler {
 
-	public ReplyThreadHandler(Connection connection) {
+	ReplyThreadHandler(Connection connection) {
 		super(connection);
 	}
 
@@ -29,9 +29,6 @@ public class ReplyThreadHandler extends AbstractFunctionalityHandler {
 		HttpPost post = new HttpPost(url + UrlConstants.ADD_REPLY);
 		post.setHeader("User-Agent", UrlConstants.USER_AGENT);
 		vals.add(new BasicNameValuePair(PostConstants.MESSAGE_HTML_NAME, message));
-		for (BasicNameValuePair basicNameValuePair : vals) {
-			System.out.println(basicNameValuePair);
-		}
 		post.setEntity(new UrlEncodedFormEntity(vals));
 
 		String html = Tools.executeHttpRequest(this, post, true);

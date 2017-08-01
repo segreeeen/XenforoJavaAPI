@@ -15,7 +15,7 @@ import at.hsol.xenapi.util.Tools;
 
 public class ProfilePostHandler extends AbstractFunctionalityHandler {
 
-	public ProfilePostHandler(Connection connection) {
+	ProfilePostHandler(Connection connection) {
 		super(connection);
 	}
 

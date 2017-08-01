@@ -15,7 +15,7 @@ import at.hsol.xenapi.util.Tools;
 
 public class SearchHandler extends AbstractFunctionalityHandler {
 
-	public SearchHandler(Connection connection) {
+	SearchHandler(Connection connection) {
 		super(connection);
 	}
 
@@ -36,7 +36,8 @@ public class SearchHandler extends AbstractFunctionalityHandler {
 		String html = Tools.executeHttpRequest(this, get, false);
 		try {
 			Set<BasicNameValuePair> valueSet = new PostSetBuilder(html).addKeywords(keywords).addUsers(users)
-					.addDate(date).addChildNodes(childNodes).addToken().addNoRedirect(null).build();
+					.addDate(date).addChildNodes(childNodes).addToken().addNoRedirect(null).addResponseType(null)
+					.build();
 			HttpPost post = new HttpPost(url + UrlConstants.SEARCH_ACTION_SUFFIX);
 			post.setHeader("User-Agent", UrlConstants.USER_AGENT);
 

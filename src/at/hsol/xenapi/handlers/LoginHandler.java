@@ -14,7 +14,7 @@ import at.hsol.xenapi.util.Tools;
 
 public class LoginHandler extends AbstractFunctionalityHandler {
 
-	public LoginHandler(Connection connection) {
+	LoginHandler(Connection connection) {
 		super(connection);
 	}
 
@@ -25,7 +25,8 @@ public class LoginHandler extends AbstractFunctionalityHandler {
 
 		try {
 			Set<BasicNameValuePair> urlParameters = new PostSetBuilder("").addLogin(username).addRegister(null)
-					.addPassword(password).addCookieCheck(null).addRedirect(null).addToken().build();
+					.addPassword(password).addCookieCheck(null).addRedirect(null).addToken().addResponseType(null)
+					.build();
 			String html;
 			post.setEntity(new UrlEncodedFormEntity(urlParameters));
 			html = Tools.executeHttpRequest(this, post, true);
