@@ -21,15 +21,15 @@ public class NewConversationHandler extends AbstractFunctionalityHandler {
 		super(connection);
 	}
 
-	public String createConversation(String url, String title, String message, String recipients) {
-		HttpGet get = new HttpGet(url + UrlConstants.CREATE_CONVERSATION);
+	public String createConversation(String title, String message, String recipients) {
+		HttpGet get = new HttpGet(getIndexUrl() + UrlConstants.CREATE_CONVERSATION);
 		try {
 			String html = Tools.executeHttpRequest(this, get, false);
 			Set<BasicNameValuePair> values = new PostSetBuilder(html).addRecipients(recipients).addTitle(title)
 					.addMessageHtml(message).addRelativeResolver().addAttachmentHash().addToken().addNoRedirect(null)
 					.addResponseType(null).build();
 
-			HttpPost post = new HttpPost(url + UrlConstants.INSERT_CONVERSATION);
+			HttpPost post = new HttpPost(getIndexUrl() + UrlConstants.INSERT_CONVERSATION);
 			post.setHeader("User-Agent", UrlConstants.USER_AGENT);
 
 			post.setEntity(new UrlEncodedFormEntity(values));
@@ -38,7 +38,7 @@ public class NewConversationHandler extends AbstractFunctionalityHandler {
 			try {
 				renewCurrentUrl(response);
 				html = Tools.createHtmlString(response);
-				System.out.println(html);
+				return html;
 			} finally {
 				response.close();
 			}

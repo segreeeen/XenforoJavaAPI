@@ -12,7 +12,7 @@ abstract class AbstractFunctionalityHandler implements Connection {
 
 	AbstractFunctionalityHandler(Connection connection) {
 		this.connection = connection;
-		this.currentUrl = connection.getCurrenUrl();
+		this.currentUrl = connection.getCurrentUrl();
 	}
 
 	@Override
@@ -32,7 +32,12 @@ abstract class AbstractFunctionalityHandler implements Connection {
 	}
 
 	@Override
-	public String getCurrenUrl() {
-		return connection.getCurrenUrl();
+	public String getCurrentUrl() {
+		return connection.getCurrentUrl();
+	}
+
+	@Override
+	public String getIndexUrl() {
+		return connection.getIndexUrl();
 	}
 }

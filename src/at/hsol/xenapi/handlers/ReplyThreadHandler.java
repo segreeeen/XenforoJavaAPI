@@ -24,7 +24,8 @@ public class ReplyThreadHandler extends AbstractFunctionalityHandler {
 		super(connection);
 	}
 
-	public String addThreadReply(String url, String message) {
+	public String addThreadReply(String threadName, String message) {
+		String url = getIndexUrl() + UrlConstants.THREADS + threadName;
 		Set<BasicNameValuePair> vals = getAddreplyHiddenValues(url);
 		HttpPost post = new HttpPost(url + UrlConstants.ADD_REPLY);
 		post.setHeader("User-Agent", UrlConstants.USER_AGENT);

@@ -20,7 +20,8 @@ public class ReplyConversationHandler extends AbstractFunctionalityHandler {
 
 	}
 
-	public String replyConversation(String url, String message) {
+	public String replyConversation(String conversationName, String message) {
+		String url = getIndexUrl() + UrlConstants.CONVERSATIONS + conversationName;
 		HttpGet get = new HttpGet(url);
 		try {
 			String html = Tools.executeHttpRequest(this, get, false);

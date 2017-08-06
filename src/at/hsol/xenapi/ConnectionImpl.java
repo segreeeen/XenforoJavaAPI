@@ -17,8 +17,10 @@ class ConnectionImpl implements Connection {
 	private final HttpClient client;
 	private final HttpClientContext context;
 	private String currentUrl;
+	private String indexUrl;
 
-	ConnectionImpl() {
+	ConnectionImpl(String indexUrl) {
+		this.indexUrl = indexUrl;
 		this.client = HttpClients.createDefault();
 		this.context = HttpClientContext.create();
 	}
@@ -49,7 +51,12 @@ class ConnectionImpl implements Connection {
 	}
 
 	@Override
-	public String getCurrenUrl() {
+	public String getCurrentUrl() {
 		return currentUrl;
+	}
+
+	@Override
+	public String getIndexUrl() {
+		return this.indexUrl;
 	}
 }

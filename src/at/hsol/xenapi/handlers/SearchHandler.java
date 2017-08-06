@@ -30,15 +30,14 @@ public class SearchHandler extends AbstractFunctionalityHandler {
 	 *            search child forums as well
 	 * @return
 	 */
-	public String searchEverything(String url, String keywords, String users, String date, String childNodes,
-			String titleOnly) {
-		HttpGet get = new HttpGet(url);
+	public String searchEverything(String keywords, String users, String date, String childNodes, String titleOnly) {
+		HttpGet get = new HttpGet(getIndexUrl());
 		String html = Tools.executeHttpRequest(this, get, false);
 		try {
 			Set<BasicNameValuePair> valueSet = new PostSetBuilder(html).addKeywords(keywords).addUsers(users)
 					.addDate(date).addChildNodes(childNodes).addToken().addNoRedirect(null).addResponseType(null)
 					.build();
-			HttpPost post = new HttpPost(url + UrlConstants.SEARCH_ACTION_SUFFIX);
+			HttpPost post = new HttpPost(getIndexUrl() + UrlConstants.SEARCH_ACTION_SUFFIX);
 			post.setHeader("User-Agent", UrlConstants.USER_AGENT);
 
 			post.setEntity(new UrlEncodedFormEntity(valueSet));

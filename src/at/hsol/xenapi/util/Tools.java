@@ -8,8 +8,10 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import at.hsol.xenapi.constants.JsonConstants;
 import at.hsol.xenapi.interfaces.Connection;
 
 public class Tools {
@@ -57,8 +59,11 @@ public class Tools {
 
 	public static String parseJsonResponse(String json) {
 		JSONObject obj = new JSONObject(json);
-		obj.getString("");
-		return null;
+		try {
+			return obj.getString(JsonConstants.STATUS);
+		} catch (JSONException e) {
+			return obj.getString(JsonConstants.REDIRECT_STATUS);
+		}
 	}
 
 }

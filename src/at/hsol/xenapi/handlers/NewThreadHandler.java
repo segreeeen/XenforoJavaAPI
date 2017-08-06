@@ -21,7 +21,8 @@ public class NewThreadHandler extends AbstractFunctionalityHandler {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String addNewThread(String url, String title, String message, String tags) {
+	public String addNewThread(String forumName, String title, String message, String tags) {
+		String url = getIndexUrl() + UrlConstants.FORUMS + forumName;
 		HttpGet get = new HttpGet(url + UrlConstants.CREATE_THREAD);
 
 		String html = Tools.executeHttpRequest(this, get, false);

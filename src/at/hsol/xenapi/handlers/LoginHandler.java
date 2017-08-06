@@ -18,9 +18,9 @@ public class LoginHandler extends AbstractFunctionalityHandler {
 		super(connection);
 	}
 
-	public String login(String url, String username, String password) {
+	public String login(String username, String password) {
 
-		HttpPost post = new HttpPost(url + UrlConstants.LOGIN);
+		HttpPost post = new HttpPost(getIndexUrl() + UrlConstants.LOGIN);
 		post.setHeader("User-Agent", UrlConstants.USER_AGENT);
 
 		try {

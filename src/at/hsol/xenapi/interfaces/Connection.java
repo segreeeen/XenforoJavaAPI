@@ -11,5 +11,7 @@ public interface Connection {
 
 	public String renewCurrentUrl(HttpResponse response);
 
-	public String getCurrenUrl();
+	public String getCurrentUrl();
+
+	public String getIndexUrl();
 }

@@ -19,7 +19,8 @@ public class ProfilePostHandler extends AbstractFunctionalityHandler {
 		super(connection);
 	}
 
-	public String addProfilePost(String url, String message) {
+	public String addProfilePost(String username, String message) {
+		String url = getIndexUrl() + UrlConstants.MEMBERS + username;
 		HttpGet get = new HttpGet(url);
 		String html = Tools.executeHttpRequest(this, get, false);
 		try {
