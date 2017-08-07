@@ -30,4 +30,12 @@ public class HandlerFactory {
 	public static LoginHandler createLoginHandler(Connection connection) {
 		return new LoginHandler(connection);
 	}
+
+	public static LogoutHandler createLogoutHandler(Connection connection) {
+		return new LogoutHandler(connection);
+	}
+
+	public static ConversationListenerHandler createConversationListenerHandler(Connection connection) {
+		return new ConversationListenerHandler(connection);
+	}
 }

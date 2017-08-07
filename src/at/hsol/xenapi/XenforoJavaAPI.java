@@ -1,14 +1,34 @@
 package at.hsol.xenapi;
 
+import java.io.Closeable;
+import java.io.IOException;
+
+import at.hsol.xenapi.handlers.ConversationListenerHandler;
 import at.hsol.xenapi.handlers.HandlerFactory;
 import at.hsol.xenapi.interfaces.Connection;
+import at.hsol.xenapi.interfaces.ConversationListener;
 
-public class XenforoJavaAPI {
+public class XenforoJavaAPI implements Closeable {
 
 	private final ConnectionImpl connection;
+	private ConversationListenerHandler convHandler = null;
+	private String username = null;
+	private String password = null;
+	private boolean loggedIn = false;
 
-	public XenforoJavaAPI(String indexUrl) {
+	/**
+	 * @param indexUrl
+	 *            Url to the index page of your Xenforo installation without
+	 *            trailing '/'.
+	 * @param username
+	 *            Your Username
+	 * @param password
+	 *            Your Password
+	 */
+	public XenforoJavaAPI(String indexUrl, String username, String password) {
 		this.connection = new ConnectionImpl(indexUrl);
+		this.username = username;
+		this.password = password;
 	}
 
 	/**
@@ -24,7 +44,35 @@ public class XenforoJavaAPI {
 	 * @return response of Xenforo
 	 */
 	public String login(String username, String password) {
+		this.username = username;
+		this.password = password;
+		if (loggedIn) {
+			HandlerFactory.createLogoutHandler(connection).logout();
+		}
 		return HandlerFactory.createLoginHandler(connection).login(username, password);
+	}
+
+	/**
+	 * This function should be called to login at the Xenforo Board. This has to be
+	 * done once per session. Username and Password entered at object creation are
+	 * used.
+	 * 
+	 * @param url
+	 *            url of the index page of the Xenforo Board
+	 * @return response of Xenforo
+	 */
+	public String login() {
+		return login(username, password);
+	}
+
+	/**
+	 * To log out manually
+	 * 
+	 * @return response
+	 */
+	public String logout() {
+		loggedIn = false;
+		return HandlerFactory.createLogoutHandler(connection).logout();
 	}
 
 	/**
@@ -110,13 +158,31 @@ public class XenforoJavaAPI {
 	}
 
 	/**
+	 * fires a ConversationEvent every time a new conversation or reply is detected.
+	 * 
+	 * @param l
+	 */
+	public void addConversationListener(ConversationListener l) {
+		if (this.convHandler == null) {
+			this.convHandler = HandlerFactory.createConversationListenerHandler(connection);
+		}
+		convHandler.addListener(l);
+	}
+
+	/**
 	 * this is a method for retrieving the connection object. this is only for
-	 * development stuff, don't use this if you just want to write a bot.
+	 * development stuff, don't use this if you just want to write a bot or
+	 * something similar.
 	 * 
 	 * @return Connection object
 	 */
 	public Connection getConnection() {
 		return this.connection;
+	}
+
+	@Override
+	public void close() throws IOException {
+		this.connection.close();
 	}
 
 }

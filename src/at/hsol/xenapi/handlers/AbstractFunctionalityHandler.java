@@ -1,5 +1,7 @@
 package at.hsol.xenapi.handlers;
 
+import java.util.concurrent.ScheduledExecutorService;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.protocol.HttpClientContext;
@@ -7,7 +9,7 @@ import org.apache.http.client.protocol.HttpClientContext;
 import at.hsol.xenapi.interfaces.Connection;
 
 abstract class AbstractFunctionalityHandler implements Connection {
-	private Connection connection;
+	protected Connection connection;
 	protected String currentUrl;
 
 	AbstractFunctionalityHandler(Connection connection) {
@@ -39,5 +41,15 @@ abstract class AbstractFunctionalityHandler implements Connection {
 	@Override
 	public String getIndexUrl() {
 		return connection.getIndexUrl();
+	}
+
+	@Override
+	public ScheduledExecutorService getExecutor() {
+		return connection.getExecutor();
+	}
+
+	@Override
+	public void close() {
+		connection.close();
 	}
 }

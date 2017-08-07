@@ -15,6 +15,7 @@ import at.hsol.xenapi.constants.JsonConstants;
 import at.hsol.xenapi.interfaces.Connection;
 
 public class Tools {
+
 	public static String createHtmlString(HttpResponse response) throws UnsupportedOperationException, IOException {
 		HttpEntity entity = response.getEntity();
 		String html = null;
