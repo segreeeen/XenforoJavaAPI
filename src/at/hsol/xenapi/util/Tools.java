@@ -14,6 +14,10 @@ import org.json.JSONObject;
 import at.hsol.xenapi.constants.JsonConstants;
 import at.hsol.xenapi.interfaces.Connection;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public class Tools {
 
 	public static String createHtmlString(HttpResponse response) throws UnsupportedOperationException, IOException {

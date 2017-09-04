@@ -2,6 +2,10 @@ package at.hsol.xenapi.handlers;
 
 import at.hsol.xenapi.interfaces.Connection;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public class HandlerFactory {
 	public static SearchHandler createSearchHandler(Connection connection) {
 		return new SearchHandler(connection);

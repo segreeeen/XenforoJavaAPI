@@ -13,6 +13,10 @@ import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.PostSetBuilder;
 import at.hsol.xenapi.util.Tools;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public class SearchHandler extends AbstractFunctionalityHandler {
 
 	SearchHandler(Connection connection) {

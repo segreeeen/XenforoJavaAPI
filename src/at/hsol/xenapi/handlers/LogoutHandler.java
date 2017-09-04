@@ -7,6 +7,10 @@ import org.jsoup.nodes.Document;
 import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.Tools;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public class LogoutHandler extends AbstractFunctionalityHandler {
 
 	LogoutHandler(Connection connection) {

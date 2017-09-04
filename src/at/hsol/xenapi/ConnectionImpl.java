@@ -18,6 +18,10 @@ import org.apache.http.protocol.HttpCoreContext;
 
 import at.hsol.xenapi.interfaces.Connection;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 class ConnectionImpl implements Connection {
 	private final PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
 	private CloseableHttpClient client;

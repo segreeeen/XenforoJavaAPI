@@ -1,5 +1,9 @@
 package at.hsol.xenapi.constants;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public class PostConstants {
 	public static final String EMPTY = "";
 

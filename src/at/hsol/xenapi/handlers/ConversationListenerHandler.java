@@ -14,6 +14,10 @@ import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.interfaces.ContentListener;
 import at.hsol.xenapi.util.Tools;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public class ConversationListenerHandler extends AbstractFunctionalityHandler {
 	List<ContentListener> listeners = new LinkedList<>();
 

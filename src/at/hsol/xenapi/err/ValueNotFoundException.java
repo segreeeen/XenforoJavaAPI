@@ -6,7 +6,7 @@ import at.hsol.xenapi.constants.PostConstants;
  * Custom exception to throw if a parser was not able to find the given
  * {@link PostConstants}.
  * 
- * @author thomassulzbacher
+ * @author Thomas Sulzbacher
  *
  */
 public class ValueNotFoundException extends Exception {

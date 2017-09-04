@@ -1,5 +1,9 @@
 package at.hsol.xenapi.constants;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public class UrlConstants {
 	public static final String FORUMS = "?forums/";
 	public static final String MEMBERS = "?members/";

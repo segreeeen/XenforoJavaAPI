@@ -18,6 +18,10 @@ import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.util.PostSetBuilder;
 import at.hsol.xenapi.util.Tools;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public class ReplyThreadHandler extends AbstractFunctionalityHandler {
 
 	ReplyThreadHandler(Connection connection) {

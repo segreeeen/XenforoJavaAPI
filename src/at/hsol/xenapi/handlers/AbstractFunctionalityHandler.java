@@ -8,6 +8,10 @@ import org.apache.http.client.protocol.HttpClientContext;
 
 import at.hsol.xenapi.interfaces.Connection;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 abstract class AbstractFunctionalityHandler implements Connection {
 	protected Connection connection;
 	protected String currentUrl;

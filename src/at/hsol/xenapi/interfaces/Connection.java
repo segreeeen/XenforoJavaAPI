@@ -6,6 +6,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.protocol.HttpClientContext;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public interface Connection {
 	public HttpClientContext getContext();
 

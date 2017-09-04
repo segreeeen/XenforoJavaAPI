@@ -8,6 +8,10 @@ import at.hsol.xenapi.handlers.HandlerFactory;
 import at.hsol.xenapi.interfaces.Connection;
 import at.hsol.xenapi.interfaces.ContentListener;
 
+/**
+ * @author Felix Batusic
+ *
+ */
 public class XenforoJavaAPI implements Closeable {
 
 	private final ConnectionImpl connection;
