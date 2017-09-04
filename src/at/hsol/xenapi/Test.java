@@ -2,8 +2,8 @@ package at.hsol.xenapi;
 
 import java.io.IOException;
 
-import at.hsol.xenapi.events.ConversationEvent;
-import at.hsol.xenapi.interfaces.ConversationListener;
+import at.hsol.xenapi.events.ContentEvent;
+import at.hsol.xenapi.interfaces.ContentListener;
 
 public class Test {
 	public static void main(String[] args) {
@@ -11,16 +11,16 @@ public class Test {
 		String result = con.login();
 		if (result != null) {
 			System.out.println(result);
-			con.addConversationListener(new ConversationListener() {
+			con.addConversationListener(new ContentListener() {
 
 				@Override
-				public void newConversationReply(ConversationEvent e) {
+				public void onNewConversationReply(ContentEvent e) {
 					System.out.println(e.total);
 				}
 
 			});
 			try {
-				Thread.sleep(30000);
+				Thread.sleep(500000);
 				con.close();
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block

@@ -1,9 +1,9 @@
 package at.hsol.xenapi.events;
 
-public class ConversationEvent {
+public class ContentEvent {
 	public final int total;
 
-	public ConversationEvent(int total) {
+	public ContentEvent(int total) {
 		this.total = total;
 	}
 }

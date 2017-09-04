@@ -6,7 +6,7 @@ import java.io.IOException;
 import at.hsol.xenapi.handlers.ConversationListenerHandler;
 import at.hsol.xenapi.handlers.HandlerFactory;
 import at.hsol.xenapi.interfaces.Connection;
-import at.hsol.xenapi.interfaces.ConversationListener;
+import at.hsol.xenapi.interfaces.ContentListener;
 
 public class XenforoJavaAPI implements Closeable {
 
@@ -162,7 +162,7 @@ public class XenforoJavaAPI implements Closeable {
 	 * 
 	 * @param l
 	 */
-	public void addConversationListener(ConversationListener l) {
+	public void addConversationListener(ContentListener l) {
 		if (this.convHandler == null) {
 			this.convHandler = HandlerFactory.createConversationListenerHandler(connection);
 		}

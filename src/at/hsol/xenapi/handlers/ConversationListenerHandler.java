@@ -9,26 +9,26 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import at.hsol.xenapi.constants.SelectConstants;
-import at.hsol.xenapi.events.ConversationEvent;
+import at.hsol.xenapi.events.ContentEvent;
 import at.hsol.xenapi.interfaces.Connection;
-import at.hsol.xenapi.interfaces.ConversationListener;
+import at.hsol.xenapi.interfaces.ContentListener;
 import at.hsol.xenapi.util.Tools;
 
 public class ConversationListenerHandler extends AbstractFunctionalityHandler {
-	List<ConversationListener> listeners = new LinkedList<>();
+	List<ContentListener> listeners = new LinkedList<>();
 
 	ConversationListenerHandler(Connection connection) {
 		super(connection);
 		connection.getExecutor().scheduleAtFixedRate(new ConversationChecker(), 1000, 10000, TimeUnit.MILLISECONDS);
 	}
 
-	public void addListener(ConversationListener e) {
+	public void addListener(ContentListener e) {
 		listeners.add(e);
 	}
 
-	private void fireChangeEvent(ConversationEvent e) {
-		for (ConversationListener l : listeners) {
-			l.newConversationReply(e);
+	private void fireChangeEvent(ContentEvent e) {
+		for (ContentListener l : listeners) {
+			l.onNewConversationReply(e);
 		}
 	}
 
@@ -43,7 +43,7 @@ public class ConversationListenerHandler extends AbstractFunctionalityHandler {
 			String parsed = parseUnreadConversations(html);
 			if (convCount != Integer.parseInt(parsed)) {
 				convCount = Integer.parseInt(parsed);
-				ConversationEvent e = new ConversationEvent(convCount);
+				ContentEvent e = new ContentEvent(convCount);
 				fireChangeEvent(e);
 			}
 		}
