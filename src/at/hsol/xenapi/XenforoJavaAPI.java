@@ -39,8 +39,6 @@ public class XenforoJavaAPI implements Closeable {
 	 * This function should be called to login at the Xenforo Board. This has to be
 	 * done once per session.
 	 * 
-	 * @param url
-	 *            url of the index page of the Xenforo Board
 	 * @param username
 	 *            user to log in
 	 * @param password
@@ -61,8 +59,6 @@ public class XenforoJavaAPI implements Closeable {
 	 * done once per session. Username and Password entered at object creation are
 	 * used.
 	 * 
-	 * @param url
-	 *            url of the index page of the Xenforo Board
 	 * @return response of Xenforo
 	 */
 	public String login() {
@@ -86,7 +82,7 @@ public class XenforoJavaAPI implements Closeable {
 	 *            message that shall be sent
 	 * @param recipients
 	 *            members of the forum that should receive the message
-	 * @return
+	 * @return reply from xenforo
 	 */
 	public String createConversation(String title, String message, String recipients) {
 		return HandlerFactory.createNewConversationHandler(connection).createConversation(title, message, recipients);
@@ -98,7 +94,7 @@ public class XenforoJavaAPI implements Closeable {
 	 *            by opening the conversation in a browser.
 	 * @param message
 	 *            message to be sent
-	 * @return
+	 * @return reply from xenforo
 	 */
 	public String replyConversation(String conversationName, String message) {
 		return HandlerFactory.createReplyConversationHandler(connection).replyConversation(conversationName, message);
@@ -132,6 +128,8 @@ public class XenforoJavaAPI implements Closeable {
 	}
 
 	/**
+	 * Careful: This returns an unparsed html file of the search results...
+	 * 
 	 * @param keywords
 	 *            keywords to look after
 	 * @param users
@@ -142,7 +140,7 @@ public class XenforoJavaAPI implements Closeable {
 	 *            search child forums as well
 	 * @param titleOnly
 	 *            only look for keywords in the title
-	 * @return
+	 * @return reply from xenforo
 	 */
 	public String searchEverything(String keywords, String users, String date, String childNodes, String titleOnly) {
 		return HandlerFactory.createSearchHandler(connection).searchEverything(keywords, users, date, childNodes,
@@ -155,7 +153,7 @@ public class XenforoJavaAPI implements Closeable {
 	 *            of the user and watch the url
 	 * @param message
 	 *            message to post to users profilepage
-	 * @return
+	 * @return reply from xenforo
 	 */
 	public String addProfilePost(String username, String message) {
 		return HandlerFactory.createProfilePostHandler(connection).addProfilePost(username, message);
@@ -164,13 +162,14 @@ public class XenforoJavaAPI implements Closeable {
 	/**
 	 * fires a ConversationEvent every time a new conversation or reply is detected.
 	 * 
-	 * @param l
+	 * @param listener
+	 *            a contentlistener
 	 */
-	public void addConversationListener(ContentListener l) {
+	public void addConversationListener(ContentListener listener) {
 		if (this.convHandler == null) {
 			this.convHandler = HandlerFactory.createConversationListenerHandler(connection);
 		}
-		convHandler.addListener(l);
+		convHandler.addListener(listener);
 	}
 
 	/**

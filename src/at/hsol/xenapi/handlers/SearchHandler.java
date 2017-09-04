@@ -32,7 +32,9 @@ public class SearchHandler extends AbstractFunctionalityHandler {
 	 *            yyyy-mm-dd
 	 * @param childNodes
 	 *            search child forums as well
-	 * @return
+	 * @param titleOnly
+	 *            ...
+	 * @return xenforo response
 	 */
 	public String searchEverything(String keywords, String users, String date, String childNodes, String titleOnly) {
 		HttpGet get = new HttpGet(getIndexUrl());
